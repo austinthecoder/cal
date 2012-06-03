@@ -4,8 +4,8 @@ require File.expand_path('../lib/cal/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Austin Schneider"]
   gem.email         = ["austinthecoder@gmail.com"]
-  gem.description   = "Calendar builder"
-  gem.summary       = "Calendar builder"
+  gem.description   = "A low level calendar engine."
+  gem.summary       = "A low level calendar engine."
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Cal::VERSION
 
-  gem.add_dependency "activesupport", ">= 3"
+  gem.add_dependency "activesupport", ">= 2"
 
   gem.add_development_dependency "rspec", "~> 2.10.0"
 end
