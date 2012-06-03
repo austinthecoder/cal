@@ -11,5 +11,7 @@ module Cal
       calendar.date.strftime "%B"
     end
 
+    alias_method :to_s, :name
+
   end
 end

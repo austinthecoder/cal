@@ -1,6 +1,6 @@
 # Cal
 
-TODO: Write a gem description
+A low level calendar engine.
 
 ## Installation
 

@@ -1,0 +1,2 @@
+require 'cal'
+require 'ostruct'

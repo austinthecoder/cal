@@ -1,5 +1,4 @@
-require_relative '../../lib/cal/month'
-require 'ostruct'
+require 'spec_helper'
 
 describe Cal::Month do
 
