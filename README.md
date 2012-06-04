@@ -20,7 +20,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Rails example
+
+``` ruby
+- calendar = Cal::Ender.new
+
+%table
+  %thead
+    %tr
+      - calendar.week_headings.each do |heading|
+        %th= heading
+  %tbody
+    - calendar.weeks.each do |week|
+      %tr
+        - week.days.each do |day|
+          %td{:class => ('current' if day.current?)}
+            = day.number
+```
 
 ## Contributing
 
