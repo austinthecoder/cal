@@ -3,9 +3,9 @@ require 'active_support/core_ext/module/delegation'
 module Cal
   class Day
 
-    def initialize(calendar, date)
-      @calendar = calendar
+    def initialize(date, calendar)
       @date = date
+      @calendar = calendar
     end
 
     attr_reader :calendar, :date
@@ -16,8 +16,8 @@ module Cal
       other.is_a?(Day) && other.calendar == calendar && other.date == date
     end
 
-    def current?
-      date == calendar.current_day
+    def number
+      date.day
     end
 
   end

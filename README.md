@@ -23,18 +23,32 @@ Or install it yourself as:
 ### Rails example
 
 ``` ruby
-- calendar = Cal::Ender.new
+# in the controller
+- calendar = Cal::Ender.new params[:date]
+
+# in the view
+%h3
+  = link_to 'Previous month', url_for(:date => calendar.previous.date)
+  |
+  = calendar.month
+  |
+  = link_to 'Next month', url_for(:date => calendar.next.date)
 
 %table
   %thead
     %tr
-      - calendar.week_headings.each do |heading|
-        %th= heading
+      %th Sunday
+      %th Monday
+      %th Tuesday
+      %th Wednesday
+      %th Thursday
+      %th Friday
+      %th Saturday
   %tbody
     - calendar.weeks.each do |week|
       %tr
         - week.days.each do |day|
-          %td{:class => ('current' if day.current?)}
+          %td{:class => ('today' if day.today?)}
             = day.number
 ```
 
