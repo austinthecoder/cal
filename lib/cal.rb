@@ -1,4 +1,5 @@
 require "cal/version"
+require 'active_support/time'
 
 module Cal
 

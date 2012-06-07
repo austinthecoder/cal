@@ -9,6 +9,8 @@ describe Cal::Day do
     @calendar = OpenStruct.new :current_day => Date.new(2012, 1, 5)
   end
 
+  it { should be_a(Comparable) }
+
   describe "==" do
     it "is true with another day with the same calendar and date" do
       subject.should == described_class.new(@date, @calendar)
@@ -40,6 +42,21 @@ describe Cal::Day do
         @date = Date.new 2012, 1, n
         subject.number.should == n
       end
+    end
+  end
+
+  describe "<=>" do
+    it "is the result of comparing the dates" do
+      other_date = Date.new 2012, 2, 15
+      result = Object.new
+      subject.date.stub(:<=>) { |obj| result if obj == other_date }
+      (subject <=> described_class.new(other_date, Object.new)).should == result
+    end
+  end
+
+  describe "succ" do
+    it "is the next day" do
+      subject.succ.should == described_class.new(Date.new(2012, 1, 16), @calendar)
     end
   end
 

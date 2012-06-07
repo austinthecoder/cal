@@ -1,4 +1,3 @@
-require 'active_support/time'
 require 'active_support/core_ext/array/grouping'
 require 'active_support/core_ext/string/conversions'
 
@@ -21,12 +20,20 @@ module Cal
       @month ||= Month.new self
     end
 
+    def first_day
+      @first_day ||= Day.new date.beginning_of_month.beginning_of_week(:sunday), self
+    end
+
+    def last_day
+      @last_day ||= Day.new date.end_of_month.end_of_week(:sunday), self
+    end
+
     def days
-      @days ||= dates.map { |date| Day.new self, date }
+      @days ||= first_day..last_day
     end
 
     def weeks
-      @weeks ||= days.in_groups_of 7
+      @weeks ||= days.to_a.in_groups_of 7
     end
 
     def previous
@@ -35,21 +42,6 @@ module Cal
 
     def next
       self.class.new date.next_month
-    end
-
-  private
-
-    # TODO: simplify/improve this
-    def dates
-      [].tap do |dates|
-        day = date.beginning_of_month.beginning_of_week :sunday
-        last_day = date.end_of_month.end_of_week :sunday
-
-        while day <= last_day
-          dates << day
-          day = day.tomorrow
-        end
-      end
     end
 
   end

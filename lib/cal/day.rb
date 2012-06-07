@@ -3,6 +3,8 @@ require 'active_support/core_ext/module/delegation'
 module Cal
   class Day
 
+    include Comparable
+
     def initialize(date, calendar)
       @date = date
       @calendar = calendar
@@ -13,7 +15,15 @@ module Cal
     delegate :today?, :to => :date
 
     def ==(other)
-      other.is_a?(Day) && other.calendar == calendar && other.date == date
+      other.is_a?(Day) && calendar == other.calendar && date == other.date
+    end
+
+    def <=>(other)
+      date <=> other.date
+    end
+
+    def succ
+      self.class.new date.tomorrow, calendar
     end
 
     def number
