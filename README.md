@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ``` ruby
 # in the controller
-- calendar = Cal::MonthlyCalendar.new params[:date]
+- calendar = Cal::MonthlyCalendar.new params[:date], :start_week_on => :monday
 
 # in the view
 %h3
@@ -37,13 +37,13 @@ Or install it yourself as:
 %table
   %thead
     %tr
-      %th Sunday
       %th Monday
       %th Tuesday
       %th Wednesday
       %th Thursday
       %th Friday
       %th Saturday
+      %th Sunday
   %tbody
     - calendar.weeks.each do |week|
       %tr
