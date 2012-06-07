@@ -4,8 +4,10 @@ require 'active_support/core_ext/string/conversions'
 module Cal
   class MonthlyCalendar
 
-    def initialize(dateable)
+    def initialize(dateable, options = {})
+      options = options.reverse_merge :start_week_on => :sunday
       @date = dateable.to_date
+      @options = options
     end
 
     attr_reader :date
@@ -21,11 +23,11 @@ module Cal
     end
 
     def first_day
-      @first_day ||= Day.new date.beginning_of_month.beginning_of_week(:sunday), self
+      @first_day ||= Day.new date.beginning_of_month.beginning_of_week(@options[:start_week_on]), self
     end
 
     def last_day
-      @last_day ||= Day.new date.end_of_month.end_of_week(:sunday), self
+      @last_day ||= Day.new date.end_of_month.end_of_week(@options[:start_week_on]), self
     end
 
     def days
