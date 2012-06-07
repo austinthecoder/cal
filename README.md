@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+See the Rails app [https://github.com/austinthecoder/cal-app](https://github.com/austinthecoder/cal-app) for an example.
+
 ### Rails example
 
 ``` ruby
