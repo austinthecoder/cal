@@ -24,13 +24,13 @@ Or install it yourself as:
 
 ``` ruby
 # in the controller
-- calendar = Cal::MonthlyCalendar.new params[:date], :start_week_on => :monday
+- calendar = Cal::MonthlyCalendar.new((params[:date] || Date.current), :start_week_on => :monday)
 
 # in the view
 %h3
   = link_to 'Previous month', url_for(:date => calendar.previous.date)
   |
-  = calendar.month
+  = "#{calendar.month} #{calendar.date.year}"
   |
   = link_to 'Next month', url_for(:date => calendar.next.date)
 
@@ -47,7 +47,7 @@ Or install it yourself as:
   %tbody
     - calendar.weeks.each do |week|
       %tr
-        - week.days.each do |day|
+        - week.each do |day|
           %td{:class => ('today' if day.today?)}
             = day.number
 ```
