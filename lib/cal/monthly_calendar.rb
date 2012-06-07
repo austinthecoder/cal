@@ -3,23 +3,18 @@ require 'active_support/core_ext/array/grouping'
 require 'active_support/core_ext/string/conversions'
 
 module Cal
-  class Ender
+  class MonthlyCalendar
 
-    def initialize(dateable, options = {})
-      options = {:format => :monthly}.merge options
-
-      if options[:format] != :monthly
-        raise ArgumentError, "only supported format currently is :monthly"
-      end
-
+    def initialize(dateable)
       @date = dateable.to_date
-      @format = options[:format]
     end
 
-    attr_reader :format, :date
+    attr_reader :date
 
     def ==(other)
-      other.is_a?(Ender) && other.date == date
+      other.is_a?(MonthlyCalendar) &&
+        other.date.year == date.year &&
+        other.date.month == date.month
     end
 
     def month

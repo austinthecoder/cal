@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ``` ruby
 # in the controller
-- calendar = Cal::Ender.new params[:date]
+- calendar = Cal::MonthlyCalendar.new params[:date]
 
 # in the view
 %h3

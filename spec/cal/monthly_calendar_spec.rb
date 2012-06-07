@@ -1,40 +1,22 @@
 require 'spec_helper'
 
-describe Cal::Ender do
-  subject { described_class.new @date, @options }
+describe Cal::MonthlyCalendar do
 
-  before do
-    @date = Date.new 2012, 2, 1
-    @options = {}
-  end
+  subject { described_class.new @date }
+
+  before { @date = Date.new 2012, 2 }
 
   describe "initialize" do
-    it "raises argument error if given format isn't :monthly" do
-      @options[:format] = :weekly
-      expect { subject }.to raise_error(ArgumentError)
-    end
-
-    it "raises an error if the first arg can't be converted to a date" do
+    it "raises an error if arg can't be converted to a date" do
       ['Octember', Object.new, '2012'].each do |obj|
         expect { described_class.new obj }.to raise_error
       end
     end
 
-    it "doesn't raise an error if the first arg can be converted to a date" do
+    it "doesn't raise an error if arg can be converted to a date" do
       [Date.current, Date.new(2012, 1, 15), '2012-02-24'].each do |obj|
         expect { described_class.new obj }.to_not raise_error
       end
-    end
-  end
-
-  describe "format" do
-    it "defaults to monthly" do
-      subject.format.should == :monthly
-    end
-
-    it "otherwise is the given format" do
-      @options[:format] = :monthly
-      subject.format.should == :monthly
     end
   end
 
@@ -45,20 +27,23 @@ describe Cal::Ender do
   end
 
   describe "==" do
-    it "is true with another calendar with the same format and date" do
-      @date = Date.new 2012, 2, 1
-      @options[:format] = :monthly
-      subject.should == described_class.new(@date, @options)
+    it "is true with another monthly calendar in the same month and year" do
+      calendar = described_class.new Date.new(@date.year, @date.month, (@date.day + 1))
+      (subject == calendar).should be_true
     end
 
-    it "is false with another calendar with a different date" do
-      @date = Date.new 2012, 2, 1
-      @options[:format] = :monthly
-      subject.should_not == described_class.new(Date.new(2012, 2, 2), @options)
+    it "is false with another monthly calendar with a different month" do
+      calendar = described_class.new Date.new(@date.year, (@date.month + 1), @date.day)
+      (subject == calendar).should be_false
     end
 
-    it "is false with a non-Ender object" do
-      subject.should_not == Object.new
+    it "is false with another monthly calendar with a different year" do
+      calendar = described_class.new Date.new((@date.year + 1), @date.month, @date.day)
+      (subject == calendar).should be_false
+    end
+
+    it "is false with a non monthly calendar" do
+      (subject == Object.new).should be_false
     end
   end
 

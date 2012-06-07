@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Cal::Day do
+
   subject { described_class.new @date, @calendar }
 
   before do

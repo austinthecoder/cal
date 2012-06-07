@@ -4,21 +4,19 @@ describe Cal::Month do
 
   subject { described_class.new @calendar }
 
-  before do
-    @calendar = OpenStruct.new :date => Date.new(2012, 3, 13)
-  end
+  before { @calendar = OpenStruct.new }
 
   describe "==" do
-    it "is true with a Cal::Month with the same calendar" do
-      subject.should == described_class.new(@calendar)
+    it "is true with another month with the same calendar" do
+      (subject == described_class.new(@calendar)).should be_true
     end
 
-    it "is false with a Cal::Month with a different calendar" do
-      subject.should_not == described_class.new(Object.new)
+    it "is false with another month with a different calendar" do
+      (subject == described_class.new(Object.new)).should be_false
     end
 
-    it "is false with a non-Cal::Month" do
-      subject.should_not == Object.new
+    it "is false with a non month" do
+      (subject == Object.new).should be_false
     end
   end
 
@@ -29,6 +27,7 @@ describe Cal::Month do
   end
 
   describe "to_s" do
+    before { @calendar.stub(:date) { Date.new 2012, 3 } }
     it { subject.to_s.should == 'March' }
   end
 
