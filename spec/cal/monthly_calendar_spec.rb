@@ -54,6 +54,10 @@ describe Cal::MonthlyCalendar do
     it { subject.month.should == Cal::Month.new(subject) }
   end
 
+  describe "year" do
+    it { subject.year.should == Cal::Year.new(subject) }
+  end
+
   describe "first_day" do
     before { @date = Date.new 2012, 2, 23 }
 
@@ -133,6 +137,26 @@ describe Cal::MonthlyCalendar do
   describe "next" do
     it "returns the calendar for the next month" do
       subject.next.should == described_class.new(@date.next_month)
+    end
+  end
+
+  describe "day_names" do
+    it "defaults to sunday through saturday" do
+      subject.day_names.should == %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
+    end
+
+    [
+      %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+      %w[Tuesday Wednesday Thursday Friday Saturday Sunday Monday],
+      %w[Wednesday Thursday Friday Saturday Sunday Monday Tuesday],
+      %w[Thursday Friday Saturday Sunday Monday Tuesday Wednesday],
+      %w[Friday Saturday Sunday Monday Tuesday Wednesday Thursday],
+      %w[Saturday Sunday Monday Tuesday Wednesday Thursday Friday]
+    ].each do |day_names|
+      it "is #{day_names[0]} through #{day_names[6]} when the weekday is set to start on #{day_names[0]}" do
+        @options[:start_week_on] = day_names[0].downcase.to_sym
+        subject.day_names.should == day_names
+      end
     end
   end
 

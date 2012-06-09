@@ -32,20 +32,15 @@ See the Rails app [https://github.com/austinthecoder/cal-app](https://github.com
 %h3
   = link_to 'Previous month', url_for(:date => calendar.previous.date)
   |
-  = "#{calendar.month} #{calendar.date.year}"
+  = "#{calendar.month} #{calendar.year}"
   |
   = link_to 'Next month', url_for(:date => calendar.next.date)
 
 %table
   %thead
     %tr
-      %th Monday
-      %th Tuesday
-      %th Wednesday
-      %th Thursday
-      %th Friday
-      %th Saturday
-      %th Sunday
+      - calendar.day_names.each do |name|
+        %th= name
   %tbody
     - calendar.weeks.each do |week|
       %tr
