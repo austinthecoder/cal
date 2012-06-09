@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+Cal is a simple calendar structure. It **does not** render a calendar. It **does not** handle events.
+
 See the Rails app [https://github.com/austinthecoder/cal-app](https://github.com/austinthecoder/cal-app) for an example.
 
 ### Rails example
