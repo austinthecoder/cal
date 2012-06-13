@@ -27,16 +27,19 @@ See the Rails app [https://github.com/austinthecoder/cal-app](https://github.com
 ### Rails example
 
 ``` ruby
-# in the controller
-- calendar = Cal::MonthlyCalendar.new((params[:date] || Date.current), :start_week_on => :monday)
+# routes
+match 'calendar/:month', :to => 'calendars#show'
 
-# in the view
+# controller
+calendar = Cal::MonthlyCalendar.from_param params[:month], :start_week_on => :monday
+
+# view
 %h3
-  = link_to 'Previous month', url_for(:date => calendar.previous.date)
+  = link_to 'Previous month', calendar_path(calendar.previous)
   |
   = "#{calendar.month} #{calendar.year}"
   |
-  = link_to 'Next month', url_for(:date => calendar.next.date)
+  = link_to 'Next month', calendar_path(calendar.next)
 
 %table
   %thead

@@ -4,6 +4,8 @@ require 'active_support/core_ext/string/conversions'
 module Cal
   class MonthlyCalendar
 
+    include Comparable
+
     DAY_NAMES = {
       :sunday => 0,
       :monday => 1,
@@ -14,27 +16,50 @@ module Cal
       :saturday => 6
     }
 
-    def initialize(dateable, options = {})
-      @date = dateable.to_date
-      @start_week_on = options[:start_week_on] || :sunday
-      @month = Month.new self
-      @year = Year.new self
+    class << self
+      def from_month(month, options = {})
+        month = month.to_month
+        new month.year, month.number, options
+      end
+
+      def from_param(param)
+        year, month_number = if param.present?
+          param.split '-'
+        else
+          now = Date.current
+          [now.year, now.month]
+        end
+        new year, month_number
+      end
     end
 
-    attr_reader :date, :month, :year
+    def initialize(year, month_number, options = {})
+      @start_week_on = options[:start_week_on] || :sunday
+      @month = Month.new year, month_number
+    end
 
-    def ==(other)
-      other.is_a?(MonthlyCalendar) &&
-        other.date.year == date.year &&
-        other.date.month == date.month
+    attr_reader :month
+
+    delegate :year, :to => :month
+
+    def <=>(other)
+      if other.is_a?(MonthlyCalendar) && start_week_on == other.send(:start_week_on)
+        month <=> other.month
+      end
     end
 
     def first_day
-      @first_day ||= Day.new date.beginning_of_month.beginning_of_week(@start_week_on), self
+      @first_day ||= begin
+        date = Date.new(year, month.to_i).beginning_of_month.beginning_of_week(start_week_on)
+        Day.new date, self
+      end
     end
 
     def last_day
-      @last_day ||= Day.new date.end_of_month.end_of_week(@start_week_on), self
+      @last_day ||= begin
+        date = Date.new(year, month.to_i).end_of_month.end_of_week(start_week_on)
+        Day.new date, self
+      end
     end
 
     def days
@@ -46,16 +71,24 @@ module Cal
     end
 
     def previous
-      self.class.new date.prev_month
+      self.class.from_month month.previous, :start_week_on => start_week_on
     end
 
     def next
-      self.class.new date.next_month
+      self.class.from_month month.succ, :start_week_on => start_week_on
     end
 
     def day_names
-      %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday].rotate DAY_NAMES[@start_week_on]
+      %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday].rotate DAY_NAMES[start_week_on]
     end
+
+    def to_param
+      "#{year}-#{month.to_i}"
+    end
+
+  private
+
+    attr_reader :start_week_on
 
   end
 end
