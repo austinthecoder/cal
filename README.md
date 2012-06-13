@@ -24,6 +24,28 @@ Cal is a simple calendar structure. It **does not** render a calendar. It **does
 
 See the Rails app [https://github.com/austinthecoder/cal-app](https://github.com/austinthecoder/cal-app) for an example.
 
+### API
+
+``` ruby
+calendar = Cal::MonthlyCalendar.new 2012, 11, :start_week_on => :monday
+
+calendar.month # a Cal::Month
+
+calendar.first_day # a Cal::Day representing the first day on the calendar, might be in the previous month
+
+calendar.last_day # a Cal::Day representing the last day on the calendar, might be in the next month
+
+calendar.days # a Range of Cal::Day's from the first day to the last
+
+calendar.weeks # an Array of Cal::Day Arrays
+
+calendar.previous # the calendar for the previous month
+
+calendar.next # the calendar for the next month
+
+calendar.day_names # an Array of the day names, e.g. ['Sunday', 'Monday', ...], depends on the `:start_week_on` option
+```
+
 ### Rails example
 
 ``` ruby
