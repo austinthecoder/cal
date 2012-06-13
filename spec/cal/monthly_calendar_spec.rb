@@ -7,7 +7,7 @@ describe Cal::MonthlyCalendar do
 
     describe "from_month" do
       it "returns a calendar for the month's year and month number" do
-        subject.from_month(Cal::Month.new(2012, 11)).should == subject.new(2012, 11)
+        subject.from_month(Cal::Month.new(2012, 11), :start_week_on => :tuesday).should == subject.new(2012, 11, :start_week_on => :tuesday)
       end
 
       it "raises an error without something that can be converted to a month" do
@@ -19,8 +19,8 @@ describe Cal::MonthlyCalendar do
 
     describe "from_param" do
       it "is the calendar for the given param" do
-        calendar = subject.new 2012, 5
-        subject.from_param(calendar.to_param).should == calendar
+        calendar = subject.new 2012, 5, :start_week_on => :tuesday
+        subject.from_param(calendar.to_param, :start_week_on => :tuesday).should == calendar
       end
 
       context "with a blank param" do

@@ -22,14 +22,14 @@ module Cal
         new month.year, month.number, options
       end
 
-      def from_param(param)
+      def from_param(param, options = {})
         year, month_number = if param.present?
           param.split '-'
         else
           now = Date.current
           [now.year, now.month]
         end
-        new year, month_number
+        new year, month_number, options
       end
     end
 
