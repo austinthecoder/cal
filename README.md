@@ -37,7 +37,7 @@ calendar = Cal::MonthlyCalendar.from_param params[:month], :start_week_on => :mo
 %h3
   = link_to 'Previous month', calendar_path(calendar.previous)
   |
-  = "#{calendar.month} #{calendar.year}"
+  = "#{calendar.month.to_s "%B"} #{calendar.year}"
   |
   = link_to 'Next month', calendar_path(calendar.next)
 
