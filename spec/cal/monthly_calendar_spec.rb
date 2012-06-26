@@ -172,20 +172,28 @@ describe Cal::MonthlyCalendar do
 
     describe "day_names" do
       it "defaults to sunday through saturday" do
-        subject.day_names.should == %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
+        subject.day_names.should == [
+          Cal::DayName.sunday,
+          Cal::DayName.monday,
+          Cal::DayName.tuesday,
+          Cal::DayName.wednesday,
+          Cal::DayName.thursday,
+          Cal::DayName.friday,
+          Cal::DayName.saturday
+        ]
       end
 
       [
-        %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
-        %w[Tuesday Wednesday Thursday Friday Saturday Sunday Monday],
-        %w[Wednesday Thursday Friday Saturday Sunday Monday Tuesday],
-        %w[Thursday Friday Saturday Sunday Monday Tuesday Wednesday],
-        %w[Friday Saturday Sunday Monday Tuesday Wednesday Thursday],
-        %w[Saturday Sunday Monday Tuesday Wednesday Thursday Friday]
+        [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday],
+        [:tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, :monday],
+        [:wednesday, :thursday, :friday, :saturday, :sunday, :monday, :tuesday],
+        [:thursday, :friday, :saturday, :sunday, :monday, :tuesday, :wednesday],
+        [:friday, :saturday, :sunday, :monday, :tuesday, :wednesday, :thursday],
+        [:saturday, :sunday, :monday, :tuesday, :wednesday, :thursday, :friday]
       ].each do |day_names|
         it "is #{day_names[0]} through #{day_names[6]} when the weekday is set to start on #{day_names[0]}" do
-          @options[:start_week_on] = day_names[0].downcase.to_sym
-          subject.day_names.should == day_names
+          @options[:start_week_on] = day_names[0]
+          subject.day_names.should == day_names.map { |dn| Cal::DayName.send dn }
         end
       end
     end

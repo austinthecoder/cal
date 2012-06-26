@@ -6,16 +6,6 @@ module Cal
 
     include Comparable
 
-    DAY_NAMES = {
-      :sunday => 0,
-      :monday => 1,
-      :tuesday => 2,
-      :wednesday => 3,
-      :thursday => 4,
-      :friday => 5,
-      :saturday => 6
-    }
-
     class << self
       def from_month(month, options = {})
         month = month.to_month
@@ -79,7 +69,7 @@ module Cal
     end
 
     def day_names
-      %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday].rotate DAY_NAMES[start_week_on]
+      @day_names ||= DayName.all :start_on => start_week_on
     end
 
     def to_param
