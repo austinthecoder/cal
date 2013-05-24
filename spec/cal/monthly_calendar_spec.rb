@@ -148,10 +148,4 @@ describe Cal::MonthlyCalendar do
       end
     end
   end
-
-  describe "#to_param" do
-    it "is the year and month string" do
-      Cal::MonthlyCalendar.new(2012, 12).to_param.should == "2012-12"
-    end
-  end
 end

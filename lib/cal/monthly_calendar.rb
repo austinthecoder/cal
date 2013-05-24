@@ -60,10 +60,6 @@ module Cal
       @day_names ||= DayName.all :start_on => start_week_on
     end
 
-    def to_param
-      "#{year}-#{month.to_i}"
-    end
-
     private
 
     attr_reader :start_week_on
