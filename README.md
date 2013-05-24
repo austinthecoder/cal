@@ -27,7 +27,7 @@ See the Rails app [https://github.com/austinthecoder/cal-app](https://github.com
 ### API
 
 ``` ruby
-calendar = Cal::MonthlyCalendar.new 2012, 11, :start_week_on => :monday
+calendar = Cal.new_monthly_calendar 2012, 11, :start_week_on => :monday
 
 calendar.month # a Cal::Month
 
@@ -50,26 +50,27 @@ calendar.day_names # an Array of the day names, e.g. ['Sunday', 'Monday', ...], 
 
 ``` ruby
 # routes
-match 'calendar/:month', :to => 'calendars#show'
+root :to => redirect("/calendars/#{Date.today.year}-#{Date.today.month}")
+resources :calendars, :only => :show
 
 # controller
-calendar = Cal::MonthlyCalendar.from_param params[:month], :start_week_on => :monday
+@calendar = Cal.new_monthly_calendar *params[:id].split('-')
 
 # view
 %h3
-  = link_to 'Previous month', calendar_path(calendar.previous)
+  = link_to 'Previous month', calendar_path(@calendar.previous.month)
   |
-  = "#{calendar.month.to_s "%B"} #{calendar.year}"
+  = "#{@calendar.month.to_s "%B"} #{@calendar.year}"
   |
-  = link_to 'Next month', calendar_path(calendar.next)
+  = link_to 'Next month', calendar_path(@calendar.next.month)
 
 %table
   %thead
     %tr
-      - calendar.day_names.each do |name|
+      - @calendar.day_names.each do |name|
         %th= name
   %tbody
-    - calendar.weeks.each do |week|
+    - @calendar.weeks.each do |week|
       %tr
         - week.each do |day|
           %td{:class => ('today' if day.today?)}

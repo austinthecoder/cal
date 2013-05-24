@@ -79,13 +79,8 @@ describe Cal::Month do
   it { Cal::Month.new(@year, @month_number).number.should == @month_number }
 
   describe "#to_s" do
-    it "is the result of formatting a date object" do
-      date = Object.new
-      format = Object.new
-      result = Object.new
-      Date.stub(:new) { |*args| date if args == [@year, @month_number] }
-      date.stub(:strftime) { |f| result if f == format }
-      Cal::Month.new(@year, @month_number).to_s(format).should == result
+    it "is the year and month" do
+      Cal::Month.new(2013, 11).to_s.should == '2013-11'
     end
   end
 

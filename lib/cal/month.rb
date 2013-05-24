@@ -15,8 +15,8 @@ module Cal
       date <=> other.send(:date) if other.is_a?(self.class)
     end
 
-    def to_s(*args)
-      date.strftime *args
+    def to_s
+      date.strftime '%Y-%m'
     end
 
     def succ
