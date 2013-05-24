@@ -1,35 +1,7 @@
 require 'spec_helper'
+require 'cal/monthly_calendar'
 
 describe Cal::MonthlyCalendar do
-  describe ".from_month" do
-    it "returns a calendar for the month's year and month number" do
-      calendar = Cal::MonthlyCalendar.from_month(Cal::Month.new(2012, 11), :start_week_on => :tuesday)
-      calendar.should == Cal::MonthlyCalendar.new(2012, 11, :start_week_on => :tuesday)
-    end
-
-    it "raises an error without something that can be converted to a month" do
-      [nil, Object.new].each do |object|
-        expect { Cal::MonthlyCalendar.from_month(object) }.to raise_error(NoMethodError)
-      end
-    end
-  end
-
-  describe ".from_param" do
-    it "is the calendar for the given param" do
-      calendar = Cal::MonthlyCalendar.new 2012, 5, :start_week_on => :tuesday
-      Cal::MonthlyCalendar.from_param(calendar.to_param, :start_week_on => :tuesday).should == calendar
-    end
-
-    context "with a blank param" do
-      it "returns a calendar for the current year and month" do
-        [' ', nil].each do |param|
-          date = Date.current
-          Cal::MonthlyCalendar.from_param(param).should == Cal::MonthlyCalendar.new(date.year, date.month)
-        end
-      end
-    end
-  end
-
   it { Cal::MonthlyCalendar.new(2012, 2).should be_a(Comparable) }
 
   describe ".new" do

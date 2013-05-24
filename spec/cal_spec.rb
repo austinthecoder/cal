@@ -1,14 +1,12 @@
 require 'spec_helper'
+require 'cal'
 
 describe Cal do
   describe ".new_monthly_calendar" do
-    it "creates a new monthly calendar with the given args" do
-      @args = [1, 2, 3]
+    it "is delegated to MonthlyCalendar.new" do
       monthly_calendar = Object.new
-      Cal::MonthlyCalendar.stub :new do |*args|
-        monthly_calendar if args == @args
-      end
-      Cal.new_monthly_calendar(*@args).should == monthly_calendar
+      Cal::MonthlyCalendar.stub(:new).with(1, 2, 3) { monthly_calendar }
+      Cal.new_monthly_calendar(1, 2, 3).should == monthly_calendar
     end
   end
 end

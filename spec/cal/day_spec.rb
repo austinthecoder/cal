@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cal/day'
 
 describe Cal::Day do
   before do

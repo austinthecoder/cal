@@ -1,27 +1,13 @@
 require 'active_support/core_ext/array/grouping'
 require 'active_support/core_ext/string/conversions'
+require 'active_support/time'
+require 'cal/day'
+require 'cal/day_name'
+require 'cal/month'
 
 module Cal
   class MonthlyCalendar
-
     include Comparable
-
-    class << self
-      def from_month(month, options = {})
-        month = month.to_month
-        new month.year, month.number, options
-      end
-
-      def from_param(param, options = {})
-        year, month_number = if param.present?
-          param.split '-'
-        else
-          now = Date.current
-          [now.year, now.month]
-        end
-        new year, month_number, options
-      end
-    end
 
     def initialize(year, month_number, options = {})
       @start_week_on = options[:start_week_on] || :sunday
@@ -33,7 +19,7 @@ module Cal
     delegate :year, :to => :month
 
     def <=>(other)
-      if other.is_a?(MonthlyCalendar) && start_week_on == other.send(:start_week_on)
+      if other.is_a?(self.class) && start_week_on == other.send(:start_week_on)
         month <=> other.month
       end
     end
@@ -61,11 +47,13 @@ module Cal
     end
 
     def previous
-      self.class.from_month month.previous, :start_week_on => start_week_on
+      previous_month = month.previous
+      self.class.new previous_month.year, previous_month.number, :start_week_on => start_week_on
     end
 
     def next
-      self.class.from_month month.succ, :start_week_on => start_week_on
+      next_month = month.succ
+      self.class.new next_month.year, next_month.number, :start_week_on => start_week_on
     end
 
     def day_names
@@ -76,9 +64,8 @@ module Cal
       "#{year}-#{month.to_i}"
     end
 
-  private
+    private
 
     attr_reader :start_week_on
-
   end
 end

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cal/month'
 
 describe Cal::Month do
   before do

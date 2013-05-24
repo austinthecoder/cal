@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cal/day_name'
 
 describe Cal::DayName do
   describe ".all" do

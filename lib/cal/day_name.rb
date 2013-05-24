@@ -1,6 +1,5 @@
 module Cal
   class DayName
-
     class << self
       def all(options = {})
         if options[:start_on]
@@ -38,7 +37,7 @@ module Cal
         @saturday ||= new :saturday, 'Saturday', 7
       end
 
-    private
+      private
 
       def sunday_to_saturday
         @sunday_to_saturday ||= [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
@@ -68,6 +67,5 @@ module Cal
         day_name.position == (position > 1 ? position - 1 : 7)
       end
     end
-
   end
 end

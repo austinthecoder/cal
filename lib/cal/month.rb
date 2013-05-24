@@ -1,6 +1,5 @@
 module Cal
   class Month
-
     include Comparable
 
     def initialize(year, number)
@@ -32,11 +31,10 @@ module Cal
       self
     end
 
-  private
+    private
 
     def date
       @date ||= Date.new year, number
     end
-
   end
 end

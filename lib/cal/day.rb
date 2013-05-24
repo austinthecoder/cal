@@ -1,8 +1,8 @@
 require 'active_support/core_ext/module/delegation'
+require 'active_support/time'
 
 module Cal
   class Day
-
     include Comparable
 
     def initialize(date, calendar)
@@ -29,6 +29,5 @@ module Cal
     def number
       date.day
     end
-
   end
 end

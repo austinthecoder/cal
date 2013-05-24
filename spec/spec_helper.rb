@@ -1,2 +1,1 @@
-require 'cal'
 require 'ostruct'
