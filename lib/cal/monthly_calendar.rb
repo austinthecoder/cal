@@ -27,14 +27,14 @@ module Cal
     def first_day
       @first_day ||= begin
         date = Date.new(year, month.to_i).beginning_of_month.beginning_of_week(start_week_on)
-        Day.new date, self
+        Day.new date
       end
     end
 
     def last_day
       @last_day ||= begin
         date = Date.new(year, month.to_i).end_of_month.end_of_week(start_week_on)
-        Day.new date, self
+        Day.new date
       end
     end
 

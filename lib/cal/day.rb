@@ -1,21 +1,21 @@
 require 'active_support/core_ext/module/delegation'
 require 'active_support/time'
+require 'cal/month'
 
 module Cal
   class Day
     include Comparable
 
-    def initialize(date, calendar)
+    def initialize(date)
       @date = date
-      @calendar = calendar
     end
 
-    attr_reader :calendar, :date
+    attr_reader :date
 
     delegate :today?, :to => :date
 
     def ==(other)
-      other.is_a?(Day) && calendar == other.calendar && date == other.date
+      other.is_a?(self.class) && date == other.date
     end
 
     def <=>(other)
@@ -23,11 +23,15 @@ module Cal
     end
 
     def succ
-      self.class.new date.tomorrow, calendar
+      self.class.new date.tomorrow
     end
 
     def number
       date.day
+    end
+
+    def month
+      @month ||= Cal::Month.new date.year, date.month
     end
   end
 end

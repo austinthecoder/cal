@@ -51,14 +51,14 @@ describe Cal::MonthlyCalendar do
       context "when the weekday is set to start on #{weekday}" do
         it "is the first viewable day on the calendar" do
           calendar = Cal::MonthlyCalendar.new(2012, 2, :start_week_on => weekday)
-          calendar.first_day.should == Cal::Day.new(Date.new(2012, *month_day), calendar)
+          calendar.first_day.should == Cal::Day.new(Date.new(2012, *month_day))
         end
       end
     end
 
     it "is the first viewable day on the calendar, using sunday as the default start day" do
       calendar = Cal::MonthlyCalendar.new(2012, 2)
-      calendar.first_day.should == Cal::Day.new(Date.new(2012, 1, 29), calendar)
+      calendar.first_day.should == Cal::Day.new(Date.new(2012, 1, 29))
     end
   end
 
@@ -74,22 +74,22 @@ describe Cal::MonthlyCalendar do
       context "when the weekday is set to start on #{weekday}" do
         it "is the last viewable day on the calendar" do
           calendar = Cal::MonthlyCalendar.new(2012, 2, :start_week_on => weekday)
-          calendar.last_day.should == Cal::Day.new(Date.new(2012, *month_day), calendar)
+          calendar.last_day.should == Cal::Day.new(Date.new(2012, *month_day))
         end
       end
     end
 
     it "is the last viewable day on the calendar, using sunday as the default start day" do
       calendar = Cal::MonthlyCalendar.new(2012, 2)
-      calendar.last_day.should == Cal::Day.new(Date.new(2012, 3, 3), calendar)
+      calendar.last_day.should == Cal::Day.new(Date.new(2012, 3, 3))
     end
   end
 
   describe "#days" do
     it "is a range of the first day to the last day" do
       calendar = Cal::MonthlyCalendar.new(2012, 2)
-      first_day = Cal::Day.new Date.new(2012, 1, 29), calendar
-      last_day = Cal::Day.new Date.new(2012, 3, 3), calendar
+      first_day = Cal::Day.new Date.new(2012, 1, 29)
+      last_day = Cal::Day.new Date.new(2012, 3, 3)
       calendar.days.should == (first_day..last_day)
     end
   end
@@ -98,11 +98,11 @@ describe Cal::MonthlyCalendar do
     it "an array of the days in groups of 7" do
       calendar = Cal::MonthlyCalendar.new(2012, 2)
       calendar.weeks.should == [
-        %w[01-29 01-30 01-31 02-01 02-02 02-03 02-04].map { |s| Cal::Day.new Date.parse("2012-#{s}"), calendar },
-        %w[02-05 02-06 02-07 02-08 02-09 02-10 02-11].map { |s| Cal::Day.new Date.parse("2012-#{s}"), calendar },
-        %w[02-12 02-13 02-14 02-15 02-16 02-17 02-18].map { |s| Cal::Day.new Date.parse("2012-#{s}"), calendar },
-        %w[02-19 02-20 02-21 02-22 02-23 02-24 02-25].map { |s| Cal::Day.new Date.parse("2012-#{s}"), calendar },
-        %w[02-26 02-27 02-28 02-29 03-01 03-02 03-03].map { |s| Cal::Day.new Date.parse("2012-#{s}"), calendar }
+        %w[01-29 01-30 01-31 02-01 02-02 02-03 02-04].map { |s| Cal::Day.new Date.parse("2012-#{s}") },
+        %w[02-05 02-06 02-07 02-08 02-09 02-10 02-11].map { |s| Cal::Day.new Date.parse("2012-#{s}") },
+        %w[02-12 02-13 02-14 02-15 02-16 02-17 02-18].map { |s| Cal::Day.new Date.parse("2012-#{s}") },
+        %w[02-19 02-20 02-21 02-22 02-23 02-24 02-25].map { |s| Cal::Day.new Date.parse("2012-#{s}") },
+        %w[02-26 02-27 02-28 02-29 03-01 03-02 03-03].map { |s| Cal::Day.new Date.parse("2012-#{s}") }
       ]
     end
   end
