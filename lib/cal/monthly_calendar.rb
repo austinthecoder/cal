@@ -2,12 +2,13 @@ require 'active_support/core_ext/array/grouping'
 require 'active_support/core_ext/string/conversions'
 require 'active_support/time'
 require 'cal/day'
-require 'cal/day_name'
 require 'cal/month'
 
 module Cal
   class MonthlyCalendar
     include Comparable
+
+    DAY_NAMES = %i[sunday monday tuesday wednesday thursday friday saturday]
 
     def initialize(year, month_number, options = {})
       @start_week_on = options[:start_week_on] || :sunday
@@ -57,7 +58,7 @@ module Cal
     end
 
     def day_names
-      @day_names ||= DayName.all :start_on => start_week_on
+      @day_names ||= DAY_NAMES.rotate(DAY_NAMES.index(start_week_on))
     end
 
     private

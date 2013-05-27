@@ -43,7 +43,7 @@ calendar.previous # the calendar for the previous month
 
 calendar.next # the calendar for the next month
 
-calendar.day_names # an Array of the day names, e.g. ['Sunday', 'Monday', ...], depends on the `:start_week_on` option
+calendar.day_names # an Array of the day names, e.g. [:sunday, :monday, ...], depends on the `:start_week_on` option
 ```
 
 ### Rails example

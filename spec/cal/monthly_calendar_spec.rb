@@ -123,15 +123,7 @@ describe Cal::MonthlyCalendar do
 
   describe "#day_names" do
     it "defaults to sunday through saturday" do
-      Cal::MonthlyCalendar.new(2012, 12).day_names.should == [
-        Cal::DayName.sunday,
-        Cal::DayName.monday,
-        Cal::DayName.tuesday,
-        Cal::DayName.wednesday,
-        Cal::DayName.thursday,
-        Cal::DayName.friday,
-        Cal::DayName.saturday,
-      ]
+      Cal::MonthlyCalendar.new(2012, 12).day_names.should == %i[sunday monday tuesday wednesday thursday friday saturday]
     end
 
     [
@@ -144,7 +136,7 @@ describe Cal::MonthlyCalendar do
     ].each do |day_names|
       it "is #{day_names[0]} through #{day_names[6]} when the weekday is set to start on #{day_names[0]}" do
         calendar = Cal::MonthlyCalendar.new(2012, 12, :start_week_on => day_names[0])
-        calendar.day_names.should == day_names.map { |dn| Cal::DayName.send dn }
+        calendar.day_names.should == day_names
       end
     end
   end
